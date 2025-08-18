@@ -3,7 +3,7 @@ import { Container } from "./components/ui/container";
 import LocationForm from "./features/locations/components/LocationForm";
 import SavedLocations from "./features/locations/components/SavedLocations";
 import useLocations from "./features/locations/hooks/useLocations";
-import useTheme from "./hooks/theme/useTheme";
+import useTheme from "./hooks/useTheme";
 
 function App() {
   const { theme } = useTheme();

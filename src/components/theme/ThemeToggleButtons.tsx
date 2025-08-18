@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Moon, Sun } from "lucide-react";
-import useTheme from "../../hooks/theme/useTheme";
+import useTheme from "../../hooks/useTheme";
 import type { Theme } from "../../types/Theme";
 import { Button } from "../ui/button";
 
