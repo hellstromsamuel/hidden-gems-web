@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteLocation } from "../data/locations";
+import { deleteLocation } from "../api/locations";
 import { queryKeyLocations } from "./useLocations";
 import type { PinnedLocation } from "@/types/PinnedLocation";
 
