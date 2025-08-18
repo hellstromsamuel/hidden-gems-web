@@ -20,7 +20,11 @@ interface Props {
 }
 
 function LocationForm({ type, location, afterSubmit }: Props) {
-  const { form, onSubmit } = useLocationForm(type, location, afterSubmit);
+  const { form, onSubmit, isLoading } = useLocationForm(
+    type,
+    location,
+    afterSubmit
+  );
 
   return (
     <Form {...form}>
@@ -103,7 +107,9 @@ function LocationForm({ type, location, afterSubmit }: Props) {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" isLoading={isLoading} className="w-full">
+          Submit
+        </Button>
       </form>
     </Form>
   );
