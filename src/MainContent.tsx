@@ -1,6 +1,6 @@
 import { Container } from "@/components/ui/container";
 import SavedLocations from "./features/locations/components/SavedLocations";
-import LocationForm from "./features/locations/components/LocationForm";
+import LocationFormAdd from "./features/locations/components/LocationFormAdd";
 
 function MainContent() {
   return (
@@ -13,7 +13,7 @@ function MainContent() {
 
         <Container className="h-max md:sticky md:top-4">
           <h2 className="font-semibold text-lg">Add location</h2>
-          <LocationForm type="add" />
+          <LocationFormAdd />
         </Container>
       </div>
     </main>
