@@ -13,7 +13,7 @@ function Header({ className }: Props) {
         className
       )}
     >
-      <h1 className="font-semibold text-xl">My locations</h1>
+      <h1 className="font-semibold text-xl">Hidden Gems</h1>
 
       <div className="border rounded-xl p-0.5">
         <ThemeToggleButtons size="sm" />
