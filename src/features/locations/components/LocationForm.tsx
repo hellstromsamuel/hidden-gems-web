@@ -1,4 +1,4 @@
-import type { PinnedLocation } from "@/types/PinnedLocation";
+import type { UseFormReturn } from "react-hook-form";
 import { Button } from "../../../components/ui/button";
 import {
   Form,
@@ -10,25 +10,18 @@ import {
 } from "../../../components/ui/form";
 import { Input } from "../../../components/ui/input";
 import { Textarea } from "../../../components/ui/textarea";
-import type { useLocationFormType } from "../hooks/useLocationForm";
-import useLocationForm from "../hooks/useLocationForm";
+import type { LocationFormValues } from "../hooks/useLocationForm";
 
 interface Props {
-  type: useLocationFormType;
-  location?: PinnedLocation;
-  afterSubmit?: () => void;
+  form: UseFormReturn<LocationFormValues>;
+  onSubmit: (values: LocationFormValues) => void;
+  isLoading: boolean;
 }
 
-function LocationForm({ type, location, afterSubmit }: Props) {
-  const { form, onSubmit, isLoading } = useLocationForm(
-    type,
-    location,
-    afterSubmit
-  );
-
+function LocationForm({ form, onSubmit, isLoading }: Props) {
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="name"
@@ -58,55 +51,6 @@ function LocationForm({ type, location, afterSubmit }: Props) {
           )}
         />
 
-        {/* Latitude Field */}
-        <FormField
-          control={form.control}
-          name="coordinates.latitude"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Latitude</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  type="number"
-                  step="any"
-                  placeholder="Enter latitude"
-                  onChange={(e) =>
-                    field.onChange(
-                      e.target.value ? parseInt(e.target.value) : ""
-                    )
-                  }
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Longitude Field */}
-        <FormField
-          control={form.control}
-          name="coordinates.longitude"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Longitude</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  type="number"
-                  step="any"
-                  placeholder="Enter longitude"
-                  onChange={(e) =>
-                    field.onChange(
-                      e.target.value ? parseInt(e.target.value) : ""
-                    )
-                  }
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <Button type="submit" isLoading={isLoading} className="w-full">
           Submit
         </Button>
