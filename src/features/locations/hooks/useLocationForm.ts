@@ -25,7 +25,8 @@ const formSchema = z.object({
   }),
 });
 
-export type useLocationFormType = "add" | "update";
+type LocationFormValues = z.infer<typeof formSchema>;
+type useLocationFormType = "add" | "update";
 
 function useLocationForm(
   type: useLocationFormType,
@@ -35,14 +36,14 @@ function useLocationForm(
   const { mutateAsync: addLocation } = useAddLocation();
   const { mutateAsync: updateLocation } = useUpdateLocation();
 
-  const form = useForm<PinnedLocationDto>({
+  const form = useForm<LocationFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: location?.name || "",
       description: location?.description || "",
       coordinates: {
-        latitude: location?.coordinates.latitude || 0,
-        longitude: location?.coordinates.longitude || 0,
+        latitude: location?.coordinates?.latitude || 0,
+        longitude: location?.coordinates?.longitude || 0,
       },
     },
   });
@@ -56,4 +57,5 @@ function useLocationForm(
   return { form, onSubmit };
 }
 
+export type { useLocationFormType };
 export default useLocationForm;
