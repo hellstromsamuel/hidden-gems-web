@@ -2,12 +2,12 @@ import Header from "./components/layout/header";
 import { Container } from "./components/ui/container";
 import LocationForm from "./features/locations/components/LocationForm";
 import SavedLocations from "./features/locations/components/SavedLocations";
-import useLocations from "./features/locations/hooks/useLocations";
 import useTheme from "./hooks/useTheme";
+// import useAuthSession from "./hooks/useAuthSession";
 
 function App() {
   const { theme } = useTheme();
-  const { data: locations, isLoading } = useLocations();
+  // const { session } = useAuthSession();
 
   return (
     <div
@@ -22,7 +22,7 @@ function App() {
         <div className="grid md:grid-cols-3 gap-8">
           <Container className="h-max md:col-span-2">
             <h2 className="font-semibold text-lg">Saved locations</h2>
-            <SavedLocations locations={locations} isLoading={isLoading} />
+            <SavedLocations />
           </Container>
 
           <Container className="h-max md:sticky md:top-4">
