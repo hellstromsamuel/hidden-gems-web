@@ -26,7 +26,7 @@ const formSchema = z.object({
       .min(-180, { message: "Longitude must be >= -180" })
       .max(180, { message: "Longitude must be <= 180" }),
   }),
-  userId: z.string().nonempty({ message: "User ID is required" }),
+  userId: z.string(),
 });
 
 type LocationFormValues = z.infer<typeof formSchema>;
@@ -56,10 +56,12 @@ function useLocationForm(
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    const updatedValues = { ...values, userId: session?.user?.id || "" };
+
     setIsLoading(true);
     try {
-      if (type === "add") await addLocation(values);
-      if (type === "update") await updateLocation(values);
+      if (type === "add") await addLocation(updatedValues);
+      if (type === "update") await updateLocation(updatedValues);
 
       if (afterSubmit) afterSubmit();
       toast.success(type === "add" ? "Location added" : "Location updated");
@@ -67,7 +69,6 @@ function useLocationForm(
       toast.error(
         type === "add" ? "Failed to add location" : "Failed to update location"
       );
-      console.error(error);
     } finally {
       setIsLoading(false);
       form.reset();
