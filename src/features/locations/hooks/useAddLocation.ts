@@ -8,7 +8,7 @@ function useAddLocation() {
 
   return useMutation({
     mutationFn: async (newLocation: PinnedLocationDto) =>
-      addLocation(newLocation),
+      await addLocation(newLocation),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeyLocations });
     },

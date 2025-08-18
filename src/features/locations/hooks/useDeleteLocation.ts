@@ -7,7 +7,7 @@ function useDeleteLocation() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (id: PinnedLocation["id"]) => deleteLocation(id),
+    mutationFn: async (id: PinnedLocation["id"]) => await deleteLocation(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeyLocations });
     },

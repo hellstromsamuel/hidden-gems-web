@@ -8,7 +8,7 @@ function useUpdateLocation() {
 
   return useMutation({
     mutationFn: async (location: Partial<PinnedLocation>) =>
-      updateLocation(location),
+      await updateLocation(location),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeyLocations });
     },
