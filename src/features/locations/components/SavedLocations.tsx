@@ -1,13 +1,10 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import type { PinnedLocation } from "@/types/PinnedLocation";
 import LoactionsList from "./LocationsList";
+import useLocations from "../hooks/useLocations";
 
-interface Props {
-  locations: PinnedLocation[] | undefined;
-  isLoading: boolean;
-}
+function SavedPlaces() {
+  const { data: locations, isLoading } = useLocations();
 
-function SavedPlaces({ locations, isLoading }: Props) {
   if (isLoading)
     return (
       <div className="space-y-4">
