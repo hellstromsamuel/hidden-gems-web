@@ -1,11 +1,15 @@
 import { supabase } from "@/config/supabase";
 import type { PinnedLocation, PinnedLocationDto } from "@/types/PinnedLocation";
+import camelcaseKeys from "camelcase-keys";
+import decamelizeKeys from "decamelize-keys";
 
 const PINNED_LOCATIONS_TABLE_NAME = "pinned_locations";
 
 export const getLocations = async (): Promise<PinnedLocation[]> => {
   const { data } = await supabase.from(PINNED_LOCATIONS_TABLE_NAME).select();
-  return (data || []) as PinnedLocation[];
+  if (!data) return [];
+
+  return camelcaseKeys(data, { deep: true }) as PinnedLocation[];
 };
 
 export const addLocation = async (
@@ -13,12 +17,12 @@ export const addLocation = async (
 ): Promise<PinnedLocation> => {
   const { data, error } = await supabase
     .from(PINNED_LOCATIONS_TABLE_NAME)
-    .insert(location)
+    .insert(decamelizeKeys(location, { deep: true }))
     .select()
     .single();
 
   if (error) throw error;
-  return data as PinnedLocation;
+  return camelcaseKeys(data, { deep: true }) as PinnedLocation;
 };
 
 export const updateLocation = async (
@@ -28,13 +32,13 @@ export const updateLocation = async (
 
   const { data, error } = await supabase
     .from(PINNED_LOCATIONS_TABLE_NAME)
-    .update(location)
+    .update(decamelizeKeys(location, { deep: true }))
     .eq("id", location.id)
     .select()
     .single();
 
   if (error) throw error;
-  return data;
+  return camelcaseKeys(data, { deep: true }) as PinnedLocation;
 };
 
 export const deleteLocation = async (id: string): Promise<void> => {
