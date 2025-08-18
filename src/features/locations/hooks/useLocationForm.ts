@@ -6,6 +6,7 @@ import type { PinnedLocation, PinnedLocationDto } from "@/types/PinnedLocation";
 import useUpdateLocation from "./useUpdateLocation";
 import { useState } from "react";
 import { toast } from "sonner";
+import useAuthSession from "@/hooks/useAuthSession";
 
 const formSchema = z.object({
   name: z
@@ -25,6 +26,7 @@ const formSchema = z.object({
       .min(-180, { message: "Longitude must be >= -180" })
       .max(180, { message: "Longitude must be <= 180" }),
   }),
+  userId: z.string().nonempty({ message: "User ID is required" }),
 });
 
 type LocationFormValues = z.infer<typeof formSchema>;
@@ -35,9 +37,10 @@ function useLocationForm(
   location?: PinnedLocationDto | PinnedLocation,
   afterSubmit?: () => void
 ) {
-  const [isLoading, setIsLoading] = useState(false);
+  const { session } = useAuthSession();
   const { mutateAsync: addLocation } = useAddLocation();
   const { mutateAsync: updateLocation } = useUpdateLocation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<LocationFormValues>({
     resolver: zodResolver(formSchema),
@@ -48,6 +51,7 @@ function useLocationForm(
         latitude: location?.coordinates?.latitude || 0,
         longitude: location?.coordinates?.longitude || 0,
       },
+      userId: session?.user?.id || "",
     },
   });
 
