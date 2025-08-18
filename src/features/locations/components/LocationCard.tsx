@@ -1,24 +1,18 @@
 import { Copy, Edit, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import DrawerDialog from "@/components/ui/drawer-dialog";
-import { useState } from "react";
-import useDeleteLocation from "../hooks/useDeleteLocation";
-import useAddLocation from "../hooks/useAddLocation";
-import type { PinnedLocation, PinnedLocationDto } from "@/types/PinnedLocation";
-import LocationForm from "./LocationForm";
+import type { PinnedLocation } from "@/types/PinnedLocation";
+import LocationFormUpdate from "./LocationFormUpdate";
+import useLocationCard from "../hooks/useLocationCard";
 
 function LocationCard({ location }: { location: PinnedLocation }) {
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const { mutate: deleteLocation } = useDeleteLocation();
-  const { mutateAsync: addLocation } = useAddLocation();
-
-  async function copyLocation() {
-    const locationData: PinnedLocationDto = {
-      ...location,
-      name: location.name + " - copy",
-    };
-    await addLocation(locationData);
-  }
+  const {
+    dialogOpen,
+    setDialogOpen,
+    isLoading,
+    handleCopyLocation,
+    handleDeleteLocation,
+  } = useLocationCard(location);
 
   return (
     <>
@@ -28,8 +22,7 @@ function LocationCard({ location }: { location: PinnedLocation }) {
         open={dialogOpen}
         setOpen={setDialogOpen}
         children={
-          <LocationForm
-            type="update"
+          <LocationFormUpdate
             location={location}
             afterSubmit={() => setDialogOpen(false)}
           />
@@ -44,7 +37,11 @@ function LocationCard({ location }: { location: PinnedLocation }) {
           </div>
 
           <div className="flex gap-2">
-            <Button variant="outline" onClick={copyLocation}>
+            <Button
+              variant="outline"
+              onClick={handleCopyLocation}
+              isLoading={isLoading === "copy"}
+            >
               <Copy />
             </Button>
 
@@ -53,7 +50,8 @@ function LocationCard({ location }: { location: PinnedLocation }) {
             </Button>
             <Button
               variant="destructive"
-              onClick={() => deleteLocation(location.id)}
+              onClick={handleDeleteLocation}
+              isLoading={isLoading === "delete"}
             >
               <Trash />
             </Button>
