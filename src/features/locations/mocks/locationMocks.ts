@@ -8,6 +8,7 @@ export const locationMock1: PinnedLocation = {
     latitude: 40.785091,
     longitude: -73.968285,
   },
+  userId: "1",
 };
 
 export const locationMock2: PinnedLocation = {
@@ -19,6 +20,7 @@ export const locationMock2: PinnedLocation = {
     latitude: 40.748817,
     longitude: -73.985428,
   },
+  userId: "2",
 };
 
 export const locationListMock: PinnedLocation[] = [
