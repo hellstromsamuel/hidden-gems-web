@@ -14,7 +14,9 @@ function SavedPlaces() {
       </div>
     );
 
-  return <LoactionsList locations={locations || []} />;
+  if (!locations || locations.length === 0) return <p>No locations saved</p>;
+
+  return <LoactionsList locations={locations} />;
 }
 
 export default SavedPlaces;
