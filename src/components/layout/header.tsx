@@ -20,9 +20,7 @@ function Header({ className }: Props) {
 
       <div className="flex items-center gap-2">
         {session && <LogoutButton />}
-        <div className="border rounded-xl p-0.5">
-          <ThemeToggleButtons size="sm" />
-        </div>
+        <ThemeToggleButtons />
       </div>
     </div>
   );
