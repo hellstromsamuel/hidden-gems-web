@@ -23,7 +23,7 @@ function LocationCard({ location }: { location: PinnedLocation }) {
   return (
     <>
       <DrawerDialog
-        title="Edit Location"
+        title="Edit location"
         description={"Modify the details of your location."}
         open={dialogOpen}
         setOpen={setDialogOpen}
