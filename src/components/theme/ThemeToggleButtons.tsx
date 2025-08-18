@@ -23,7 +23,7 @@ function ThemeToggleButtons({ size = "default" }: Props) {
   ];
 
   return (
-    <div className="flex gap-1 rounded-xl p-1">
+    <div className="flex items-center px-1 gap-1 rounded-lg h-10">
       {themeOptions.map((option) => (
         <Button
           key={option.value}
