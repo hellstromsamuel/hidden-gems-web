@@ -4,6 +4,8 @@ import z from "zod";
 import useAddLocation from "./useAddLocation";
 import type { PinnedLocation, PinnedLocationDto } from "@/types/PinnedLocation";
 import useUpdateLocation from "./useUpdateLocation";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   name: z
@@ -33,6 +35,7 @@ function useLocationForm(
   location?: PinnedLocationDto | PinnedLocation,
   afterSubmit?: () => void
 ) {
+  const [isLoading, setIsLoading] = useState(false);
   const { mutateAsync: addLocation } = useAddLocation();
   const { mutateAsync: updateLocation } = useUpdateLocation();
 
@@ -49,12 +52,25 @@ function useLocationForm(
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    if (type === "add") await addLocation(values);
-    if (type === "update") await updateLocation(values);
-    if (afterSubmit) afterSubmit();
+    setIsLoading(true);
+    try {
+      if (type === "add") await addLocation(values);
+      if (type === "update") await updateLocation(values);
+
+      if (afterSubmit) afterSubmit();
+      toast.success(type === "add" ? "Location added" : "Location updated");
+    } catch (error) {
+      toast.error(
+        type === "add" ? "Failed to add location" : "Failed to update location"
+      );
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+      form.reset();
+    }
   }
 
-  return { form, onSubmit };
+  return { form, onSubmit, isLoading };
 }
 
 export type { useLocationFormType };

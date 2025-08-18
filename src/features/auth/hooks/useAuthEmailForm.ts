@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import z, { email } from "zod";
 import { signInWithEmail } from "../api/auth";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   email: email({ message: "Invalid email" }),
@@ -23,13 +24,15 @@ function useAuthEmailForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSent(false);
+    setIsLoading(true);
 
     try {
-      setIsLoading(true);
       await signInWithEmail(values.email);
       setIsSent(true);
+      toast.success("Sign in link sent to email");
     } catch (error) {
       console.error(error);
+      toast.error("Failed to send sign in link");
     } finally {
       setIsLoading(false);
     }
