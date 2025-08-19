@@ -3,7 +3,8 @@ import AuthEmailForm from "./features/auth/components/AuthEmailForm";
 import useTheme from "./hooks/useTheme";
 import useAuthSession from "./hooks/useAuthSession";
 import Header from "./components/layout/Header";
-import MainContent from "./MainContent";
+import { cn } from "./lib/utils";
+import MapInteractive from "./features/map/components/MapInteractive";
 
 function App() {
   const { theme } = useTheme();
@@ -12,21 +13,23 @@ function App() {
   return (
     <div
       data-theme={theme}
-      className="bg-gray-100 dark:bg-gray-800 min-h-screen min-w-screen"
+      className="bg-gray-100 dark:bg-gray-800 min-h-screen min-w-screen relative"
     >
-      <div className="bg-white dark:bg-gray-900">
-        <Header className="max-w-5xl mx-auto" />
+      <div className={cn("left-0 right-0 z-10 p-4", session && "absolute")}>
+        <Header
+          className={cn("rounded-xl max-w-xl mx-auto", session && "shadow-md")}
+        />
       </div>
 
-      <div className="px-4 py-8">
-        {session ? (
-          <MainContent />
-        ) : (
+      {session && <MapInteractive />}
+
+      {!session && (
+        <div className="px-4 pt-12">
           <Container className="max-w-sm mx-auto">
             <AuthEmailForm />
           </Container>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
