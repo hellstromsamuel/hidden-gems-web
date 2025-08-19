@@ -2,7 +2,7 @@ import { Container } from "./components/ui/container";
 import AuthEmailForm from "./features/auth/components/AuthEmailForm";
 import useTheme from "./hooks/useTheme";
 import useAuthSession from "./hooks/useAuthSession";
-import Header from "./components/layout/Header";
+import Header from "./components/layout/header";
 import MainContent from "./MainContent";
 
 function App() {
