@@ -1,7 +1,4 @@
-export type Coordinates = {
-  latitude: number;
-  longitude: number;
-};
+import type { Coordinates } from "./Coordinates";
 
 export interface PinnedLocationDto {
   name: string;
